@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//mapper文件所在的包名
 @MapperScan("com.example.mpd.mapper")
 @SpringBootApplication
 public class MybatisPlusDemoApplication {

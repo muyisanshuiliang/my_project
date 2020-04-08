@@ -4,6 +4,7 @@ package com.example.mpd;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.mpd.enums.SexEnum;
 import com.example.mpd.mapper.UserMapper;
 import com.example.mpd.model.User;
 import com.example.mpd.service.UserService;
@@ -41,11 +42,18 @@ public class MybatisPlusTest {
     void batchTest() {
         List<User> users = Lists.newArrayList();
         User user;
-        for (int i = 0; i < 100000; i++) {
+        JSONObject jsonObject;
+        for (int i = 0; i < 5; i++) {
             user = new User();
             String format = new DecimalFormat("00000").format(i);
             user.setAddress("四川省成都市" + format);
             user.setName("张三" + format);
+            jsonObject = new JSONObject();
+            user.setSex(SexEnum.getSexEnum((i % 3 == 0) ? 1 : 2));
+            jsonObject.put("father", new StringBuilder(user.getName()).append("'s father"));
+            jsonObject.put("mother", new StringBuilder(user.getName()).append("'s mother"));
+            jsonObject.put("son", new StringBuilder(user.getName()).append("'s son"));
+            user.setDetailInfo(jsonObject);
             users.add(user);
         }
         userService.saveBatch(users, 50);
@@ -73,7 +81,8 @@ public class MybatisPlusTest {
         user.setStudentNumber(4);
         userMapper.updateById(user);
     }
-//
+
+    //
 //    @Test
 //    void testUpdate2() {
 //        User user = new User();
@@ -84,23 +93,28 @@ public class MybatisPlusTest {
 //
     @Test
     void get() {
-        User user = userMapper.selectById(111);
+        User user = userMapper.selectById(201227);
         System.out.println(user);
     }
 
     @Test
-    public void getPageList(){
-        Page<User> userPage = userMapper.selectPage(new Page<>(1, 10),new QueryWrapper<User>().orderByDesc("student_number") );
+    public void getPageList() {
+        Page<User> userPage = userMapper.selectPage(new Page<>(1, 10), new QueryWrapper<User>().orderByDesc("student_number"));
         List<User> records = userPage.getRecords();
-        System.out.println(userPage.getCurrent() +" ========= " + userPage.getTotal()+" ========= " + userPage.getSize()+" ========= " + userPage.getPages()+" ========= " + userPage.getOrders());
-        if(records != null && records.size() != 0){
+        System.out.println(userPage.getCurrent() + " ========= " + userPage.getTotal() + " ========= " + userPage.getSize() + " ========= " + userPage.getPages() + " ========= " + userPage.getOrders());
+        if (records != null && records.size() != 0) {
             records.forEach(item -> System.out.println(item));
         }
     }
 
-//    @Test
-//    void deleteAll() {
-//        int i = userMapper.deleteAll();
-//        System.out.println("影响行数：" + i);
-//    }
+    @Test
+    void deleteAll() {
+        int i = userMapper.deleteAll();
+        System.out.println("影响行数：" + i);
+    }
+
+    @Test
+    public void testLogicDelete(){
+        userMapper.deleteById(201228);
+    }
 }
