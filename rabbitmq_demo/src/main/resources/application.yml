@@ -1,0 +1,22 @@
+spring:
+  rabbitmq:
+#    服务器地址
+    host: 192.168.2.252
+#    端口
+    port: 5672
+#    用户名和密码，注意只有在host为127.0.0.1或者localhost的时候，用户名和密码才能是guest,否则会连接被拒绝
+    username: zhnf
+    password: zhnf@123
+#   虚拟主机，一个机器可以存在多个虚拟主机，默认“/”
+    virtual-host: /saas
+    listener:
+      simple:
+#        消费者数量
+        concurrency: 10
+#        允许最大消费者数量
+        max-concurrency: 10
+#        从队列每次取一个，默认1
+        prefetch: 1
+#        消费者自动启动
+        auto-startup: true
+        default-requeue-rejected: true # 失败后重试

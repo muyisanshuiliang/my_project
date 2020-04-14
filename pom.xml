@@ -18,6 +18,7 @@
         <module>serial_port_demo</module>
         <module>redis_demo</module>
         <module>http_client_demo</module>
+        <module>rabbitmq_demo</module>
     </modules>
 
     <parent>
