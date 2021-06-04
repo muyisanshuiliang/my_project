@@ -16,7 +16,7 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <httpclient.version>4.5.12</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
     </properties>
 
     <dependencies>
